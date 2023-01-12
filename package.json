@@ -6,11 +6,9 @@
   "scripts": {
     "clean": "wireit",
     "lint": "wireit",
-    "rollup:dev": "wireit",
-    "rollup:prod": "wireit",
-    "pub": "wireit",
-    "unpub": "wireit",
     "build": "wireit",
+    "rollup:prod": "wireit",
+    "dd": "wireit",
     "dev": "ts-node src/cli.ts"
   },
   "repository": {
@@ -31,22 +29,21 @@
   "devDependencies": {
     "@jest/test-sequencer": "^29.3.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
-    "@rollup/plugin-terser": "^0.2.1",
-    "@rollup/plugin-typescript": "^10.0.1",
+    "@rollup/plugin-terser": "^0.3.0",
     "@tsconfig/node14": "^1.0.3",
     "@types/cli-progress": "^3.11.0",
-    "@types/jest": "^29.2.4",
+    "@types/jest": "^29.2.5",
     "@types/node": "^14.18.36",
     "@types/source-map-support": "^0.5.6",
-    "@types/yargs": "^17.0.17",
-    "@typescript-eslint/eslint-plugin": "^5.47.1",
-    "@typescript-eslint/parser": "^5.47.1",
+    "@types/yargs": "^17.0.19",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
     "cross-env": "^7.0.3",
     "deps-diff": "^1.0.1",
-    "eslint": "^8.30.0",
+    "eslint": "^8.31.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsdoc": "^39.6.4",
     "eslint-plugin-prefer-arrow": "^1.2.3",
@@ -57,13 +54,13 @@
     "prettier-plugin-organize-imports": "^3.2.1",
     "read-pkg": "^7.1.0",
     "rimraf": "^3.0.2",
-    "rollup": "^3.9.0",
-    "rollup-plugin-ts": "^3.0.2",
-    "rollup-plugin-typescript2": "^0.34.1",
-    "ts-jest": "^29.0.3",
+    "rollup": "^3.9.1",
+    "rollup-plugin-ts": "^3.1.1",
+    "swc": "^1.0.11",
+    "ts-jest": "^29.0.4",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4",
-    "wireit": "^0.9.2"
+    "wireit": "^0.9.3"
   },
   "dependencies": {
     "chalk": "^5.2.0",
@@ -74,10 +71,15 @@
   },
   "wireit": {
     "clean": {
+      "description": "remove dist, artifact directory",
       "command": "rimraf dist/ artifact/"
     },
     "lint": {
       "command": "eslint --cache ."
+    },
+    "dd": {
+      "description": "summary of dependencies upgrade and add, remove",
+      "command": "deps-diff md -d dev -d prod -d peer --title-list-type '*' --deps-list-type '*' --content-list-type '*'"
     },
     "build": {
       "command": "tsc --incremental",
@@ -88,37 +90,14 @@
         "NODE_ENV": "production"
       }
     },
-    "rollup:dev": {
-      "command": "rollup --config ./.configs/rollup.config.dev.ts --configPlugin ts --bundleConfigAsCjs",
-      "dependencies": [
-        "clean"
-      ],
-      "env": {
-        "NODE_ENV": "production"
-      }
-    },
     "rollup:prod": {
-      "command": "rollup --config ./.configs/rollup.config.prod.ts --configPlugin rollup-plugin-typescript2",
+      "command": "rollup --configPlugin ts -c ./.configs/rollup.config.prod.ts",
       "dependencies": [
-        "clean"
+        "clean",
+        "lint"
       ],
       "env": {
         "NODE_ENV": "production"
-      }
-    },
-    "pub": {
-      "command": "npm publish --registry http://localhost:8901 --force",
-      "dependencies": [
-        "rollup:prod"
-      ],
-      "env": {
-        "RELEASE_MODE": "true"
-      }
-    },
-    "unpub": {
-      "command": "npm publish typescript-cli-boilerplate@latest --registry http://localhost:8901 --force",
-      "env": {
-        "RELEASE_MODE": "true"
       }
     }
   }

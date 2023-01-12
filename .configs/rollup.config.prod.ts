@@ -1,6 +1,6 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { readPackageSync } from 'read-pkg';
-import ts from 'rollup-plugin-typescript2';
+import ts from 'rollup-plugin-ts';
 
 const pkg = readPackageSync();
 
@@ -18,7 +18,13 @@ export default [
           return pkg?.dependencies?.[module] != null && pkg?.devDependencies?.[module] != null;
         },
       }),
-      ts({ tsconfig: 'tsconfig.prod.json' }),
+      ts({
+        transpiler: {
+          typescriptSyntax: 'typescript',
+          otherSyntax: 'swc',
+        },
+        tsconfig: 'tsconfig.prod.json',
+      }),
     ],
   },
 ];
