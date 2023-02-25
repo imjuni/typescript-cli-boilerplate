@@ -13,15 +13,17 @@
       }
     },
     {
-      "files": ".tjsclirc",
+      "files": ".eslintrc.cjs",
       "options": {
-        "parser": "json5"
+        "parser": "babel"
       }
     },
     {
       "files": [
         ".vscode/launch.json",
         ".vscode/settings.json",
+        ".swcrc",
+        "tsconfig.eslint.json",
         "tsconfig.prod.json",
         "tsconfig.json"
       ],

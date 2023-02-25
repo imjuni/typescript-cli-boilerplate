@@ -1,57 +1,41 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import { readPackageSync } from 'read-pkg';
-import ts from 'rollup-plugin-ts';
+import typescript from '@rollup/plugin-typescript';
+import readPkg from 'read-pkg';
+import dts from 'rollup-plugin-dts';
+import { swc } from 'rollup-plugin-swc3';
 
-const pkg = readPackageSync();
+const pkg = readPkg.sync();
 
 export default [
   {
     input: 'src/cli.ts',
     output: {
       dir: 'dist',
-      format: 'esm',
+      format: 'cjs',
       banner: '#!/usr/bin/env node',
     },
     plugins: [
       nodeResolve({
         resolveOnly: (module) => {
-          const isLocal =
-            (pkg?.dependencies?.[module] === undefined || pkg?.dependencies?.[module] === null) &&
-            (pkg?.devDependencies?.[module] === undefined ||
-              pkg?.devDependencies?.[module] === null);
-
-          return isLocal;
+          return (
+            pkg?.dependencies?.[module] != null &&
+            pkg?.devDependencies?.[module] != null &&
+            pkg?.peerDependencies?.[module] != null
+          );
         },
       }),
-      ts({ tsconfig: 'tsconfig.json' }),
+      typescript({
+        tsconfig: 'tsconfig.prod.json',
+      }),
+      swc(),
     ],
   },
   {
-    input: 'src/ctix.ts',
-    output: [
-      {
-        format: 'cjs',
-        file: 'dist/cjs/ctix.js',
-        sourcemap: true,
-      },
-      {
-        format: 'esm',
-        file: 'dist/esm/ctix.js',
-        sourcemap: true,
-      },
-    ],
-    plugins: [
-      nodeResolve({
-        resolveOnly: (module) => {
-          const isLocal =
-            (pkg?.dependencies?.[module] === undefined || pkg?.dependencies?.[module] === null) &&
-            (pkg?.devDependencies?.[module] === undefined ||
-              pkg?.devDependencies?.[module] === null);
-
-          return isLocal;
-        },
-      }),
-      ts({ tsconfig: 'tsconfig.json' }),
-    ],
+    input: 'dist/src/cli.d.ts',
+    output: {
+      dir: 'dist',
+      format: 'esm',
+    },
+    plugins: [dts()],
   },
 ];

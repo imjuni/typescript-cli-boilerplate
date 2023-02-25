@@ -12,12 +12,13 @@ module.exports = {
   testEnvironment: 'node',
   moduleFileExtensions: ['ts', 'tsx', 'js'],
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.(ts|tsx)$': ['ts-jest', { isolateModules: true }, '@swc/jest'],
+    // '^.+\\.(ts|tsx)$': '@swc/jest',
   },
   testMatch: ['**/__tests__/*.(ts|tsx)', '**/__test__/*.(ts|tsx)'],
-  testPathIgnorePatterns: ['/node_modules/', 'example/', 'dist/', 'erdia_eg/'],
+  testPathIgnorePatterns: ['/node_modules/', 'example/', 'dist/'],
   setupFilesAfterEnv: ['<rootDir>/.configs/jest.setup.js'],
-  testSequencer: '<rootDir>/.configs/test.spec.js',
+  // testSequencer: '<rootDir>/.configs/test.spec.js',
 
   moduleNameMapper: pathsToModuleNameMapper(tsconfig.compilerOptions.paths, {
     prefix: '<rootDir>/',

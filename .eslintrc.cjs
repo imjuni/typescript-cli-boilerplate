@@ -6,36 +6,69 @@ module.exports = {
   },
   extends: [
     'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:@typescript-eslint/strict',
     'airbnb-base',
     'airbnb-typescript/base',
     'plugin:prettier/recommended',
     'plugin:import/errors',
     'plugin:import/warnings',
+    'prettier',
   ],
-  ignorePatterns: ['__test__/*', '__tests__/*', 'dist/*'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: './tsconfig.eslint.json',
+    project: ['tsconfig.eslint.json'],
+    tsconfigRootDir: __dirname,
   },
+  ignorePatterns: ['coverage/**', 'dist/**', '__test__/**', '__tests__/**'],
   plugins: ['@typescript-eslint', 'prettier', 'import'],
   rules: {
-    '@typescript-eslint/indent': 'off',
-    'max-len': ['error', { code: 120 }],
-    'import/no-unresolved': 'off',
-
-    // https://github.com/import-js/eslint-plugin-import/blob/v2.26.0/docs/rules/extensions.md
-    // ESM project always need extension .js
-    'import/extensions': ['error', 'always'],
-
-    'import/order': ['off'],
-
-    'prettier/prettier': 'error',
+    'max-len': [
+      'error',
+      {
+        ignoreUrls: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
+        ignoreComments: true,
+        ignoreTrailingComments: true,
+        code: 120,
+      },
+    ],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        varsIgnorePattern: '^_.+$',
+        argsIgnorePattern: '^_.+$',
+      },
+    ],
+    'import/extensions': ['off'],
+    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
+    // static function use this: void
+    '@typescript-eslint/no-invalid-void-type': ['error', { allowAsThisParameter: true }],
+    '@typescript-eslint/no-unnecessary-boolean-literal-compare': ['off'],
   },
+  overrides: [
+    {
+      files: ['jest.config.cjs'],
+      rules: {
+        '@typescript-eslint/no-unsafe-argument': ['off'],
+        '@typescript-eslint/no-unsafe-member-access': ['off'],
+      },
+    },
+    {
+      files: ['**/__tests__/*.ts', 'jest.config.cjs'],
+      rules: {
+        '@typescript-eslint/no-unsafe-assignment': ['off'],
+        'no-console': ['off'],
+      },
+    },
+  ],
   settings: {
-    // 'import/resolver': {
-    //   typescript: {
-    //     alwaysTryTypes: true,
-    //   },
-    // },
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+        project: 'tsconfig.eslint.json',
+      },
+    },
   },
 };
