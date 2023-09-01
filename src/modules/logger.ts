@@ -1,21 +1,23 @@
 import chalk from 'chalk';
-import pino, { type Logger } from 'pino';
-import pretty from 'pino-pretty';
+import { pino, type Logger } from 'pino';
+import pinoPrettyPkg from 'pino-pretty';
 
-let log:
-  | Logger<{
-      browser: {
-        asObject: true;
-      };
-      customLevels: {
-        debug: number;
-        verbose: number;
-        info: number;
-        warn: number;
-        error: number;
-      };
-    }>
-  | undefined;
+const { PinoPretty: pretty } = pinoPrettyPkg as any;
+
+type LoggerType = Logger<{
+  browser: {
+    asObject: true;
+  };
+  customLevels: {
+    debug: number;
+    verbose: number;
+    info: number;
+    warn: number;
+    error: number;
+  };
+}>;
+
+let log: LoggerType | undefined;
 
 export function getLogLevel(level: unknown): number {
   try {
@@ -36,7 +38,7 @@ export function getLogLevel(level: unknown): number {
   }
 }
 
-export default function logger() {
+export default function logger(): LoggerType {
   if (log === undefined) {
     const stream = pretty({
       translateTime: 'yy-mm-dd HH:MM:ss',

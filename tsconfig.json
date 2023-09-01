@@ -1,6 +1,6 @@
 {
   // This is an alias to @tsconfig/node12: https://github.com/tsconfig/bases
-  "extends": "@tsconfig/node14/tsconfig.json",
+  "extends": "@tsconfig/node16/tsconfig.json",
 
   // Most ts-node options can be specified here using their programmatic names.
   "ts-node": {
@@ -38,13 +38,10 @@
     "noUncheckedIndexedAccess": true,
 
     /* Module Resolution Options */
-    "module": "Node16",
-    "moduleResolution": "Node16" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
+    "module": "ES2020",
+    "moduleResolution": "bundler" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
     "moduleDetection": "force",
     "baseUrl": "." /* Base directory to resolve non-absolute module names. */,
-    "paths": {
-      "#modules/*": ["src/modules/*"]
-    },
     "rootDir": ".",
     "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
 

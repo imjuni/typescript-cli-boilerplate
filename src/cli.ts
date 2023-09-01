@@ -1,5 +1,5 @@
-import Container from '#modules/container';
-import logger from '#modules/logger';
+import Container from 'src/modules/container';
+import logger from 'src/modules/logger';
 import { isError } from 'my-easy-fp';
 import { install as sourceMapSupportInstall } from 'source-map-support';
 import yargs from 'yargs';
