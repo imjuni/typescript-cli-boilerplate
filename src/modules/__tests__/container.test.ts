@@ -1,4 +1,4 @@
-import Container from '#modules/container';
+import Container from 'src/modules/container';
 import 'jest';
 
 describe('Container', () => {
