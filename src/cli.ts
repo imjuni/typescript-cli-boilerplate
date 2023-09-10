@@ -1,12 +1,10 @@
 import Container from 'src/modules/container';
-import logger from 'src/modules/logger';
+import log from 'consola';
 import { isError } from 'my-easy-fp';
 import { install as sourceMapSupportInstall } from 'source-map-support';
 import yargs from 'yargs';
 
 sourceMapSupportInstall();
-
-const log = logger();
 
 const parser = yargs(process.argv.slice(2));
 parser.option('-p', { describe: 'test' });
