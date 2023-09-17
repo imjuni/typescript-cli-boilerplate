@@ -1,5 +1,5 @@
-import Container from 'src/modules/container';
 import 'jest';
+import Container from 'src/modules/container';
 
 describe('Container', () => {
   test('pass', () => {

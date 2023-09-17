@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "TypeScript cli boilerplate",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "scripts": {
     "clean": "rimraf dist",
     "dev": "tsx src/cli.ts",
     "debug": "node --inspect-brk -r ts-node/register src/cli.ts",
-    "prebuild": "npm run clean",
+    "prebuild": "pnpm run clean",
     "build": "tsc --incremental --noEmit --project tsconfig.json --tsBuildInfoFile .tsbuildinfo",
     "esbuild-cjs": "FORMAT=cjs node .configs/esbuild.mjs",
     "esbuild-esm": "FORMAT=esm node .configs/esbuild.mjs",
@@ -18,11 +18,9 @@
     "test": "jest --coverage",
     "lint": "eslint --cache .",
     "lint-staged": "lint-staged",
-    "rollup:prod": "rollup --config ./.configs/rollup.config.prod.ts --configPlugin typescript",
-    "rollup:dev": "rollup --config ./.configs/rollup.config.dev.ts --configPlugin typescript",
-    "pub": "npm publish --registry http://localhost:8901",
-    "unpub": "npm unpublish typescript-cli-boilerplate@$npm_package_version --registry http://localhost:8901 --force",
-    "pub:prod": "RELEASE_MODE=true npm publish",
+    "pub": "pnpm publish --registry http://localhost:8901",
+    "unpub": "pnpm unpublish typescript-cli-boilerplate@$npm_package_version --registry http://localhost:8901 --force",
+    "pub:prod": "RELEASE_MODE=true pnpm publish",
     "dd": "deps-diff md -d prod -d dev --title-list-type '*' --deps-list-type '*' --content-list-type '*'",
     "prepare": "husky install"
   },
@@ -42,9 +40,9 @@
   },
   "homepage": "https://github.com/imjuni/typescript-cli-boilerplate#readme",
   "devDependencies": {
-    "@tsconfig/node16": "^16.1.1",
+    "@tsconfig/node18": "^18.2.2",
     "@types/jest": "^29.5.4",
-    "@types/node": "^14.18.36",
+    "@types/node": "^18.11.9",
     "@types/source-map-support": "^0.5.7",
     "@types/yargs": "^17.0.24",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
