@@ -1,8 +1,9 @@
 import log from 'consola';
 import { isError } from 'my-easy-fp';
 import { install as sourceMapSupportInstall } from 'source-map-support';
-import Container from 'src/modules/container';
 import yargs from 'yargs';
+
+import Container from 'src/modules/container';
 
 sourceMapSupportInstall();
 
