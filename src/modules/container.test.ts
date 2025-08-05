@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import Container from 'src/modules/container';
+import { Container } from 'src/modules/container';
 
 describe('Container', () => {
   it('constructor', () => {

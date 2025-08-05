@@ -13,7 +13,7 @@ export default class Container {
 // */
 
 // /*
-export default class Container {
+export class Container {
   accessor name: string;
 
   constructor(name: string) {
