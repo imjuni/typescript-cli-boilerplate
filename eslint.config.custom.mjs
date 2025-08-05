@@ -57,6 +57,38 @@ export const customOverrideImportXPlugin = [
 
 export const customOverrideEslintRule = [
   {
+    files: ['**/*.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'ForInStatement',
+          message: 'Avoid for..in; it iterates over the entire prototype chain.',
+        },
+        {
+          selector: 'ForStatement',
+          message: 'Avoid classic for loops; prefer Array methods or for..of when appropriate.',
+        },
+        {
+          selector: 'WhileStatement',
+          message: 'Avoid while loops; prefer for..of or Array methods.',
+        },
+        {
+          selector: 'DoWhileStatement',
+          message: 'Avoid do..while loops; prefer for..of or Array methods.',
+        },
+        {
+          selector: 'LabeledStatement',
+          message: 'Labels are a form of GOTO.',
+        },
+        {
+          selector: 'WithStatement',
+          message: '`with` is disallowed.',
+        },
+      ],
+    },
+  },
+  {
     files: ['vitest.config.mts', 'eslint.config.mjs', 'eslint.custom.config.mjs'],
     rules: {
       'import-x/no-extraneous-dependencies': 'off',
