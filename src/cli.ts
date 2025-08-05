@@ -3,7 +3,7 @@ import { isError } from 'my-easy-fp';
 import { install as sourceMapSupportInstall } from 'source-map-support';
 import yargs from 'yargs';
 
-import Container from 'src/modules/container';
+import { Container } from 'src/modules/container';
 
 sourceMapSupportInstall();
 

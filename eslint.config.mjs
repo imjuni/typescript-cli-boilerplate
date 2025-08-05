@@ -13,6 +13,15 @@ import { configs, plugins, rules } from 'eslint-config-airbnb-extended';
 import { rules as prettierConfigRules } from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
 
+import {
+  customEslintRule,
+  customIgnore,
+  customOverrideEslintRule,
+  customOverrideImportXPlugin,
+  customTsconfig,
+  customTypescriptRule,
+} from './eslint.config.custom.mjs';
+
 const gitignorePath = path.resolve('.', '.gitignore');
 
 const jsConfig = [
@@ -27,6 +36,8 @@ const jsConfig = [
   plugins.importX,
   // Airbnb Base Recommended Config
   ...configs.base.recommended,
+  ...customEslintRule,
+  ...customOverrideImportXPlugin,
 ];
 
 const nodeConfig = [
@@ -43,13 +54,8 @@ const typescriptConfig = [
   ...configs.base.typescript,
   // Strict TypeScript Config
   rules.typescript.typescriptEslintStrict,
-  {
-    languageOptions: {
-      parserOptions: {
-        project: './tsconfig.eslint.json',
-      },
-    },
-  },
+  ...customTypescriptRule,
+  customTsconfig,
 ];
 
 const prettierConfig = [
@@ -72,11 +78,7 @@ const prettierConfig = [
 
 export default [
   // Ignore .gitignore files/folder in eslint
-  ...[
-    {
-      ignores: ['./.configs', './vitest.config.mts'],
-    },
-  ],
+  ...customIgnore,
   includeIgnoreFile(gitignorePath),
   // Javascript Config
   ...jsConfig,
@@ -86,4 +88,5 @@ export default [
   ...typescriptConfig,
   // Prettier Config
   ...prettierConfig,
+  ...customOverrideEslintRule,
 ];
